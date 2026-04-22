@@ -1,0 +1,1255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Papazian Atlas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --bg: #000000;
+        --panel: rgba(0, 0, 0, 0.88);
+        --panel-strong: rgba(0, 0, 0, 0.94);
+        --line: rgba(255, 255, 255, 0.12);
+        --line-strong: rgba(255, 255, 255, 0.28);
+        --text: #ededed;
+        --muted: rgba(237, 237, 237, 0.74);
+        --soft: rgba(237, 237, 237, 0.46);
+        --island-width: min(98vw, 920px);
+        --systems: #ccff00;
+        --sound: #ff6b35;
+        --text-domain: #c084fc;
+        --image: #22d3ee;
+        --code: #4ade80;
+        --space: #fb923c;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'DM Sans', sans-serif;
+        overflow: hidden;
+      }
+
+      body {
+        cursor: default;
+      }
+
+      body.hovering {
+        cursor: pointer;
+      }
+
+      button,
+      a {
+        color: inherit;
+        font: inherit;
+      }
+
+      .island-nav-shell {
+        position: fixed;
+        left: 50%;
+        top: 0.75rem;
+        z-index: 80;
+        width: var(--island-width);
+        transform: translateX(-50%);
+      }
+
+      .island-nav {
+        display: grid;
+        grid-template-columns: 118px repeat(6, minmax(0, 1fr));
+        gap: 1px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(0, 0, 0, 0.88);
+        padding: 0.25rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(18px);
+      }
+
+      .nav-pill {
+        min-width: 0;
+        padding: 0.82rem 0.5rem;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--muted);
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.62rem;
+        white-space: nowrap;
+        text-decoration: none;
+        transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
+      }
+
+      .nav-pill:hover,
+      .nav-pill:focus-visible,
+      .nav-pill.is-active {
+        color: var(--text);
+        border-color: var(--line-strong);
+        background: rgba(255, 255, 255, 0.08);
+        outline: none;
+      }
+
+      .nav-pill.is-active {
+        text-decoration: line-through;
+      }
+
+      #atlas-root,
+      #atlas-canvas {
+        position: fixed;
+        inset: 0;
+      }
+
+      #atlas-canvas canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      #crosshair {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        z-index: 70;
+        width: 16px;
+        height: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.36);
+        border-radius: 999px;
+        pointer-events: none;
+        transform: translate(-50%, -50%) scale(1);
+        transition: transform 180ms ease, border-color 180ms ease, opacity 180ms ease;
+        opacity: 0.65;
+      }
+
+      body.hovering #crosshair {
+        transform: translate(-50%, -50%) scale(2);
+        border-color: rgba(255, 255, 255, 0.8);
+        opacity: 1;
+      }
+
+      #entry-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 60;
+        display: grid;
+        place-items: center;
+        padding: 2rem;
+        background: radial-gradient(circle at center, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.96) 70%, rgba(0, 0, 0, 1) 100%);
+        opacity: 1;
+        transition: opacity 700ms ease;
+      }
+
+      #entry-screen.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .entry-panel {
+        width: min(100%, 860px);
+        display: grid;
+        gap: 1rem;
+        padding: 1.3rem;
+        border: 1px solid var(--line);
+        background: rgba(0, 0, 0, 0.9);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(20px);
+        text-align: center;
+      }
+
+      .entry-title {
+        margin: 0;
+        font-size: clamp(2.8rem, 8vw, 6.5rem);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+        font-weight: 300;
+        color: var(--text);
+      }
+
+      .entry-panel p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .entry-instructions {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.75rem;
+        padding: 1rem 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        color: var(--soft);
+        font-size: 0.62rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .entry-note {
+        color: var(--text) !important;
+        font-size: 0.72rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .entry-cta {
+        color: rgba(255, 255, 255, 0.72) !important;
+        font-size: 0.64rem;
+        letter-spacing: 0.38em;
+        text-transform: uppercase;
+        animation: pulse 1.8s ease-in-out infinite;
+      }
+
+      #bottom-drawer {
+        position: fixed;
+        left: 50%;
+        bottom: 1rem;
+        z-index: 50;
+        width: var(--island-width);
+        transform: translate(-50%, calc(100% + 2rem));
+        opacity: 0;
+        transition: transform 260ms ease, opacity 260ms ease;
+      }
+
+      #bottom-drawer.active {
+        transform: translate(-50%, 0);
+        opacity: 1;
+      }
+
+      .drawer-panel {
+        display: grid;
+        gap: 0;
+        border: 1px solid var(--line);
+        background: var(--panel-strong);
+        box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(20px);
+      }
+
+      .drawer-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1.5rem;
+        padding: 1.35rem 1.35rem 1.1rem;
+      }
+
+      .drawer-main {
+        min-width: 0;
+      }
+
+      .drawer-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.42rem;
+        margin-bottom: 0.85rem;
+        color: var(--soft);
+        font-size: 0.52rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .drawer-close {
+        flex: 0 0 auto;
+        width: 2.7rem;
+        height: 2.7rem;
+        border: 1px solid var(--line);
+        background: transparent;
+        color: var(--muted);
+        display: grid;
+        place-items: center;
+        padding: 0;
+        font-size: 1.35rem;
+        line-height: 1;
+      }
+
+      .drawer-close:hover,
+      .drawer-close:focus-visible {
+        color: var(--text);
+        border-color: var(--line-strong);
+        outline: none;
+      }
+
+      .drawer-title {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .drawer-summary {
+        margin: 1.15rem 0 0;
+        color: var(--muted);
+        font-size: 1.02rem;
+        line-height: 1.55;
+        max-width: 94%;
+      }
+
+      .drawer-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1.15rem 1.35rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .drawer-links {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        min-width: 0;
+        flex: 1 1 auto;
+      }
+
+      .drawer-links-label {
+        flex: 0 0 auto;
+        color: var(--soft);
+        font-size: 0.56rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+
+      .connections-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .connection-chip {
+        border: 1px solid var(--line);
+        padding: 0.72rem 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        color: var(--text);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.56rem;
+        white-space: nowrap;
+      }
+
+      .connection-chip::before {
+        content: '▸';
+        margin-right: 0.6rem;
+        color: var(--soft);
+      }
+
+      .connection-chip:hover,
+      .connection-chip:focus-visible {
+        color: var(--text);
+        border-color: var(--line-strong);
+        background: rgba(255, 255, 255, 0.06);
+        outline: none;
+      }
+
+      .connection-chip.is-muted {
+        opacity: 0.34;
+        pointer-events: none;
+      }
+
+      .drawer-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.45rem;
+        flex-wrap: wrap;
+        flex: 0 0 auto;
+      }
+
+      .drawer-link {
+        border: 1px solid var(--line-strong);
+        padding: 0.86rem 1.35rem;
+        color: #080808;
+        background: rgba(255, 255, 255, 0.96);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.62rem;
+        font-weight: 700;
+      }
+
+      .drawer-link:hover,
+      .drawer-link:focus-visible {
+        border-color: var(--line-strong);
+        background: rgba(255, 255, 255, 1);
+        outline: none;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.42;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+
+      @media (max-width: 840px) {
+        .island-nav-shell {
+          width: calc(100vw - 1rem);
+        }
+
+        .island-nav {
+          grid-template-columns: 104px repeat(6, minmax(0, 1fr));
+        }
+
+        .nav-pill {
+          padding: 0.68rem 0.3rem;
+          font-size: 0.52rem;
+          letter-spacing: 0.16em;
+        }
+
+        .entry-instructions {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .drawer-summary {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .entry-panel {
+          padding: 1rem;
+        }
+
+        #bottom-drawer {
+          width: calc(100vw - 1rem);
+          bottom: 0.5rem;
+        }
+
+        .drawer-head {
+          padding: 1rem 1rem 0.9rem;
+        }
+
+        .drawer-title {
+          font-size: 1.55rem;
+        }
+
+        .drawer-summary {
+          font-size: 0.94rem;
+        }
+
+        .drawer-footer {
+          padding: 1rem;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .drawer-links {
+          width: 100%;
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 0.65rem;
+        }
+
+        .drawer-actions {
+          width: 100%;
+        }
+
+        .drawer-link {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.174.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.174.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="atlas-root">
+      <div id="atlas-canvas" aria-hidden="true"></div>
+
+      <div class="island-nav-shell">
+        <nav class="island-nav" aria-label="Atlas navigation">
+          <a class="nav-pill shuffle is-home" href="/">PAPAZIAN</a>
+          <button class="nav-pill shuffle" type="button" data-filter="sound">SOUND</button>
+          <button class="nav-pill shuffle" type="button" data-filter="text">TEXT</button>
+          <button class="nav-pill shuffle" type="button" data-filter="image">IMAGE</button>
+          <button class="nav-pill shuffle" type="button" data-filter="code">CODE</button>
+          <button class="nav-pill shuffle" type="button" data-filter="space">SPACE</button>
+          <button class="nav-pill shuffle" type="button" data-filter="systems">SYSTEMS</button>
+        </nav>
+      </div>
+
+      <div id="crosshair"></div>
+
+      <div id="entry-screen" role="button" tabindex="0" aria-label="Enter atlas">
+        <div class="entry-panel">
+          <h1 class="entry-title" id="entry-title">ATLAS</h1>
+          <p id="entry-body"></p>
+          <div class="entry-instructions" id="entry-instructions"></div>
+          <p class="entry-note" id="entry-note"></p>
+          <p class="entry-cta" id="entry-cta"></p>
+        </div>
+      </div>
+
+      <div id="bottom-drawer" aria-live="polite">
+        <div class="drawer-panel">
+          <div class="drawer-head">
+            <div class="drawer-main">
+              <div class="drawer-meta" id="drawer-meta"></div>
+              <h2 class="drawer-title" id="drawer-title"></h2>
+              <p class="drawer-summary" id="drawer-summary"></p>
+            </div>
+            <button type="button" class="drawer-close" id="drawer-close" aria-label="Close node">×</button>
+          </div>
+          <div class="drawer-footer">
+            <div class="drawer-links">
+              <span class="drawer-links-label">LINKS:</span>
+              <div class="connections-row" id="drawer-connections"></div>
+            </div>
+            <div class="drawer-actions">
+              <a class="drawer-link" id="drawer-link" href="#">ENTER</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module">
+      import * as THREE from 'three';
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+      import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+      import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+      import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+      import { DOMAIN_COLORS, DOMAIN_LABELS, ENTRY_COPY, NODES } from '/data/nodes.js';
+
+      const DRAWER_Y_OFFSET = 1.2;
+      const CLICK_DRAG_THRESHOLD = 8;
+      const OVERVIEW_AUTO_ROTATE_DELAY = 1600;
+      const OVERVIEW_CAMERA = new THREE.Vector3(-5, -2, 70);
+      const OVERVIEW_TARGET = new THREE.Vector3(-5, -2, -18);
+      const IDLE_BORDER_COLOR = new THREE.Color(0x1a1b22);
+      const HOVER_BORDER_COLOR = new THREE.Color(0xffffff);
+      const IDLE_LINE_COLOR = new THREE.Color(0x333344);
+      const HOVER_LINE_COLOR = new THREE.Color(0xaaaacc);
+
+      const state = {
+        activeNode: null,
+        hoveredNode: null,
+        activeFilters: new Set(),
+        cameraMode: 'overview',
+        drawerOpen: false,
+        entered: sessionStorage.getItem('papazian-atlas-3d-seen') === '1',
+        flightProgress: 0,
+      };
+
+      const root = document.body;
+      const canvasMount = document.getElementById('atlas-canvas');
+      const entryScreen = document.getElementById('entry-screen');
+      const drawer = document.getElementById('bottom-drawer');
+      const drawerClose = document.getElementById('drawer-close');
+      const drawerMeta = document.getElementById('drawer-meta');
+      const drawerTitle = document.getElementById('drawer-title');
+      const drawerSummary = document.getElementById('drawer-summary');
+      const drawerConnections = document.getElementById('drawer-connections');
+      const drawerLink = document.getElementById('drawer-link');
+      const crosshair = document.getElementById('crosshair');
+      const filterButtons = Array.from(document.querySelectorAll('[data-filter]'));
+      const shuffleTargets = Array.from(document.querySelectorAll('.shuffle'));
+
+      document.getElementById('entry-title').textContent = ENTRY_COPY.title;
+      document.getElementById('entry-body').textContent = ENTRY_COPY.body;
+      document.getElementById('entry-note').textContent = ENTRY_COPY.note;
+      document.getElementById('entry-cta').textContent = ENTRY_COPY.cta;
+      const instructionsEl = document.getElementById('entry-instructions');
+      ENTRY_COPY.instructions.forEach((instruction) => {
+        const span = document.createElement('span');
+        span.textContent = instruction;
+        instructionsEl.appendChild(span);
+      });
+
+      if (state.entered) {
+        entryScreen.classList.add('is-hidden');
+        scheduleOverviewAutoRotate(900);
+      }
+
+      const nodeById = new Map(NODES.map((node) => [node.id, node]));
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x000000);
+      scene.fog = new THREE.FogExp2(0x000000, 0.018);
+
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 220);
+      camera.position.copy(OVERVIEW_CAMERA);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance' });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ReinhardToneMapping;
+      canvasMount.appendChild(renderer.domElement);
+
+      const composer = new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene, camera));
+      const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0, 0, 1);
+      composer.addPass(bloomPass);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.06;
+      controls.enablePan = false;
+      controls.autoRotate = false;
+      controls.autoRotateSpeed = 0.22;
+      controls.rotateSpeed = 0.52;
+      controls.minDistance = 5.5;
+      controls.maxDistance = 125;
+      controls.target.copy(OVERVIEW_TARGET);
+
+      let isUserOrbiting = false;
+      let overviewRotateTimer = null;
+      controls.addEventListener('start', () => {
+        isUserOrbiting = true;
+        controls.autoRotate = false;
+        if (overviewRotateTimer) {
+          window.clearTimeout(overviewRotateTimer);
+          overviewRotateTimer = null;
+        }
+      });
+      controls.addEventListener('end', () => {
+        window.setTimeout(() => {
+          isUserOrbiting = false;
+          if (!state.activeNode && state.entered) {
+            scheduleOverviewAutoRotate();
+          }
+        }, 120);
+      });
+
+      const starGeometry = new THREE.BufferGeometry();
+      const starPositions = new Float32Array(1800);
+      for (let index = 0; index < starPositions.length; index += 3) {
+        starPositions[index] = (Math.random() - 0.5) * 120;
+        starPositions[index + 1] = (Math.random() - 0.5) * 80;
+        starPositions[index + 2] = -Math.random() * 120;
+      }
+      starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+      const stars = new THREE.Points(
+        starGeometry,
+        new THREE.PointsMaterial({ color: 0xffffff, size: 0.06, transparent: true, opacity: 0.46, toneMapped: false })
+      );
+      scene.add(stars);
+
+      const textureLoader = new THREE.TextureLoader();
+      const frontGeo = new THREE.PlaneGeometry(1, 1);
+      const borderGeo = new THREE.PlaneGeometry(1, 1);
+      const nodeGroups = [];
+      const nodeMap = new Map();
+      const lineSet = new Set();
+      const lines = [];
+      const raycaster = new THREE.Raycaster();
+      const pointer = new THREE.Vector2(9999, 9999);
+      const clock = new THREE.Clock();
+      const pointerState = { x: 0, y: 0, dragging: false };
+      const overviewTarget = new THREE.Vector3().copy(OVERVIEW_TARGET);
+      const flightFrom = new THREE.Vector3();
+      const flightTo = new THREE.Vector3();
+      const flightLookFrom = new THREE.Vector3();
+      const flightLookTo = new THREE.Vector3();
+      const lookAtProxy = new THREE.Vector3().copy(OVERVIEW_TARGET);
+      const navShell = document.querySelector('.island-nav-shell');
+
+      function easeInOutCubic(value) {
+        return value < 0.5
+          ? 4 * value * value * value
+          : 1 - Math.pow(-2 * value + 2, 3) / 2;
+      }
+
+      function scheduleOverviewAutoRotate(delay = OVERVIEW_AUTO_ROTATE_DELAY) {
+        if (overviewRotateTimer) {
+          window.clearTimeout(overviewRotateTimer);
+        }
+        overviewRotateTimer = window.setTimeout(() => {
+          if (!state.activeNode && !isUserOrbiting && state.cameraMode === 'overview') {
+            controls.autoRotate = true;
+          }
+          overviewRotateTimer = null;
+        }, delay);
+      }
+
+      function getFocusDistance(node) {
+        const faceWidth = node.group?.userData?.faceWidth || 3;
+        const faceHeight = node.group?.userData?.faceHeight || 2;
+        const dominantSize = Math.max(faceHeight, faceWidth * 0.7);
+        const fovRad = THREE.MathUtils.degToRad(camera.fov);
+        return dominantSize / 0.52 / (2 * Math.tan(fovRad / 2)) + 2.2;
+      }
+
+      function prepareFocusFlight(node) {
+        const activePosition = node.group.position;
+        flightFrom.copy(camera.position);
+        flightLookFrom.copy(controls.target);
+        flightLookTo.copy(activePosition);
+
+        const towardCamera = camera.position.clone().sub(activePosition);
+        if (towardCamera.lengthSq() < 0.0001) {
+          towardCamera.set(0, 0, 1);
+        }
+        towardCamera.normalize();
+        flightTo.copy(activePosition).addScaledVector(towardCamera, getFocusDistance(node));
+        lookAtProxy.copy(flightLookFrom);
+        state.flightProgress = 0;
+      }
+
+      function getNodeSizeMultiplier(node) {
+        const tierMultiplier =
+          node.tier === 'lead' ? 1.12 :
+          node.tier === 'archive' ? 0.74 :
+          0.9;
+        const archiveMultiplier = node.hasProjectPage === false ? 0.78 : 1;
+        const manualMultiplier = typeof node.sizeMultiplier === 'number' ? node.sizeMultiplier : 1;
+        return tierMultiplier * archiveMultiplier * manualMultiplier;
+      }
+
+      function setNodeAspect(group, width, height) {
+        const aspect = width > 0 && height > 0 ? width / height : 1.5;
+        const longestSide = 3 * (group.userData.baseSizeMultiplier || 1);
+        let faceWidth = longestSide;
+        let faceHeight = longestSide;
+
+        if (aspect >= 1) {
+          faceWidth = longestSide;
+          faceHeight = longestSide / aspect;
+        } else {
+          faceWidth = longestSide * aspect;
+          faceHeight = longestSide;
+        }
+
+        group.userData.faceMesh.scale.set(faceWidth, faceHeight, 1);
+        group.userData.borderMesh.scale.set(faceWidth + 0.18, faceHeight + 0.13, 1);
+        group.userData.faceWidth = faceWidth;
+        group.userData.faceHeight = faceHeight;
+      }
+
+      function updateActiveViewOffset() {
+        if (!state.activeNode) {
+          if (camera.view) {
+            camera.clearViewOffset();
+            camera.updateProjectionMatrix();
+          }
+          return;
+        }
+
+        const navRect = navShell.getBoundingClientRect();
+        const drawerRect = drawer.getBoundingClientRect();
+        const bandTop = navRect.bottom;
+        const bandBottom = drawerRect.top;
+        const bandCenter = bandTop + (bandBottom - bandTop) * 0.5;
+        const viewportCenter = window.innerHeight * 0.5;
+        const offsetY = Math.round(viewportCenter - bandCenter);
+
+        camera.setViewOffset(window.innerWidth, window.innerHeight, 0, offsetY, window.innerWidth, window.innerHeight);
+        camera.updateProjectionMatrix();
+      }
+
+      function scrambleElement(element) {
+        const finalText = element.dataset.label || element.textContent || '';
+        element.dataset.label = finalText;
+        const chars = finalText.replace(/\s+/g, '').split('');
+        if (!chars.length) return;
+
+        const frames = 16;
+        let frame = 0;
+        const tick = () => {
+          if (frame >= frames) {
+            element.textContent = finalText;
+            return;
+          }
+          const scrambled = finalText
+            .split('')
+            .map((char, index) => {
+              if (char === ' ') return ' ';
+              return chars[(index + frame + Math.floor(Math.random() * chars.length)) % chars.length];
+            })
+            .join('');
+          element.textContent = scrambled;
+          frame += 1;
+          window.setTimeout(tick, 30);
+        };
+        tick();
+      }
+
+      shuffleTargets.forEach((target) => {
+        target.dataset.label = target.textContent;
+        target.addEventListener('mouseenter', () => scrambleElement(target));
+        target.addEventListener('focus', () => scrambleElement(target));
+      });
+
+      function updatePointer(clientX, clientY) {
+        const bounds = renderer.domElement.getBoundingClientRect();
+        pointer.x = ((clientX - bounds.left) / bounds.width) * 2 - 1;
+        pointer.y = -((clientY - bounds.top) / bounds.height) * 2 + 1;
+        crosshair.style.left = `${clientX}px`;
+        crosshair.style.top = `${clientY}px`;
+      }
+
+      function enterAtlas() {
+        state.entered = true;
+        sessionStorage.setItem('papazian-atlas-3d-seen', '1');
+        entryScreen.classList.add('is-hidden');
+        scheduleOverviewAutoRotate(900);
+      }
+
+      entryScreen.addEventListener('click', enterAtlas);
+      entryScreen.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          enterAtlas();
+        }
+      });
+
+      function setDrawerOpen(nextOpen) {
+        state.drawerOpen = nextOpen;
+        drawer.classList.toggle('active', nextOpen);
+      }
+
+      function updateDrawer() {
+        if (!state.activeNode) {
+          drawerMeta.innerHTML = '';
+          drawerTitle.textContent = '';
+          drawerSummary.textContent = '';
+          drawerConnections.innerHTML = '';
+          drawerLink.removeAttribute('href');
+          drawerLink.removeAttribute('target');
+          drawerLink.removeAttribute('rel');
+          drawerLink.textContent = 'ENTER';
+          drawerLink.hidden = false;
+          setDrawerOpen(false);
+          return;
+        }
+
+        const node = state.activeNode;
+        drawerMeta.innerHTML = '';
+        [
+          node.year,
+          node.domains.map((domain) => DOMAIN_LABELS[domain]).join(' · '),
+          node.stack.slice(0, 2).map((item) => item.toUpperCase()).join(' · '),
+        ].filter(Boolean).forEach((text, index) => {
+          const span = document.createElement('span');
+          span.textContent = text;
+          drawerMeta.appendChild(span);
+          if (index < 2) {
+            const divider = document.createElement('span');
+            divider.textContent = '//';
+            drawerMeta.appendChild(divider);
+          }
+        });
+        drawerTitle.textContent = node.title;
+        drawerSummary.textContent = node.summary;
+        drawerConnections.innerHTML = '';
+        node.connections.forEach((connectionId) => {
+          const connection = nodeById.get(connectionId);
+          if (!connection) return;
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'connection-chip';
+          if (!isNodeVisible(connection)) {
+            button.classList.add('is-muted');
+          }
+          button.textContent = connection.shortTitle || connection.title;
+          button.addEventListener('click', () => selectNode(connection));
+          drawerConnections.appendChild(button);
+        });
+
+        drawerLink.removeAttribute('target');
+        drawerLink.removeAttribute('rel');
+
+        if (node.actionHref) {
+          drawerLink.href = node.actionHref;
+          drawerLink.textContent = node.actionLabel || 'OPEN';
+          drawerLink.hidden = false;
+          if (node.actionExternal || /^https?:\/\//.test(node.actionHref)) {
+            drawerLink.target = '_blank';
+            drawerLink.rel = 'noreferrer noopener';
+          }
+        } else if (node.hasProjectPage === false) {
+          drawerLink.removeAttribute('href');
+          drawerLink.textContent = '';
+          drawerLink.hidden = true;
+        } else {
+          drawerLink.href = `/projects/${node.id}`;
+          drawerLink.textContent = node.actionLabel || 'ENTER';
+          drawerLink.hidden = false;
+        }
+
+        setDrawerOpen(true);
+      }
+
+      function selectNode(node) {
+        state.activeNode = node;
+        state.cameraMode = 'flight';
+        isUserOrbiting = false;
+        if (overviewRotateTimer) {
+          window.clearTimeout(overviewRotateTimer);
+          overviewRotateTimer = null;
+        }
+        controls.enabled = false;
+        controls.autoRotate = false;
+        prepareFocusFlight(node);
+        updateDrawer();
+      }
+
+      function clearSelection() {
+        state.activeNode = null;
+        state.cameraMode = 'overview';
+        state.flightProgress = 0;
+        controls.enabled = false;
+        controls.autoRotate = false;
+        updateDrawer();
+      }
+
+      drawerClose.addEventListener('click', clearSelection);
+
+      function isNodeVisible(node) {
+        if (!state.activeFilters.size) return true;
+        return node.domains.some((domain) => state.activeFilters.has(domain));
+      }
+
+      function applyFilters() {
+        nodeGroups.forEach((group) => {
+          group.visible = isNodeVisible(group.userData.node);
+        });
+
+        lines.forEach((line) => {
+          const sourceVisible = nodeMap.get(line.userData.sourceId)?.visible;
+          const targetVisible = nodeMap.get(line.userData.targetId)?.visible;
+          line.visible = Boolean(sourceVisible && targetVisible);
+        });
+
+        filterButtons.forEach((button) => {
+          const filter = button.dataset.filter;
+          button.classList.toggle('is-active', state.activeFilters.has(filter));
+        });
+
+        if (state.activeNode && !isNodeVisible(state.activeNode)) {
+          clearSelection();
+        } else {
+          updateDrawer();
+        }
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          scrambleElement(button);
+          const filter = button.dataset.filter;
+          if (state.activeFilters.has(filter)) {
+            state.activeFilters.delete(filter);
+          } else {
+            state.activeFilters.add(filter);
+          }
+          applyFilters();
+        });
+      });
+
+      function updateColors() {
+        nodeGroups.forEach((group) => {
+          const node = group.userData.node;
+          const accent = DOMAIN_COLORS[node.domains[0]] || '#ffffff';
+          const borderMaterial = group.userData.borderMaterial;
+          const faceMaterial = group.userData.faceMaterial;
+          const isConnectedToActive =
+            state.activeNode &&
+            state.activeNode.connections.includes(node.id) &&
+            node.id !== state.activeNode.id;
+          const isConnectedToHover =
+            !state.activeNode &&
+            state.hoveredNode &&
+            state.hoveredNode.connections.includes(node.id) &&
+            node.id !== state.hoveredNode.id;
+
+          if (state.activeNode?.id === node.id) {
+            borderMaterial.color.set(accent);
+            borderMaterial.opacity = 1;
+            faceMaterial.opacity = 1;
+            group.scale.lerp(new THREE.Vector3(1.12, 1.12, 1), 0.12);
+          } else if (state.hoveredNode?.id === node.id && !state.activeNode) {
+            borderMaterial.color.copy(HOVER_BORDER_COLOR);
+            borderMaterial.opacity = 1;
+            faceMaterial.opacity = 1;
+            group.scale.lerp(new THREE.Vector3(1.04, 1.04, 1), 0.12);
+          } else if (isConnectedToActive || isConnectedToHover) {
+            borderMaterial.color.copy(IDLE_BORDER_COLOR);
+            borderMaterial.opacity = 0.88;
+            faceMaterial.opacity = 0.96;
+            group.scale.lerp(new THREE.Vector3(1, 1, 1), 0.12);
+          } else {
+            borderMaterial.color.copy(IDLE_BORDER_COLOR);
+            borderMaterial.opacity = state.activeNode || state.hoveredNode ? 0.28 : 0.62;
+            faceMaterial.opacity = state.activeNode || state.hoveredNode ? 0.16 : 0.92;
+            group.scale.lerp(new THREE.Vector3(1, 1, 1), 0.12);
+          }
+        });
+
+        lines.forEach((line) => {
+          const isActive =
+            state.activeNode &&
+            (line.userData.sourceId === state.activeNode.id || line.userData.targetId === state.activeNode.id);
+          const isHover =
+            !state.activeNode &&
+            state.hoveredNode &&
+            (line.userData.sourceId === state.hoveredNode.id || line.userData.targetId === state.hoveredNode.id);
+
+          if (isActive) {
+            line.material.color.set(DOMAIN_COLORS[state.activeNode.domains[0]] || '#ffffff');
+            line.material.opacity = 1;
+          } else if (isHover) {
+            line.material.color.copy(HOVER_LINE_COLOR);
+            line.material.opacity = 0.7;
+          } else {
+            line.material.color.copy(IDLE_LINE_COLOR);
+            line.material.opacity = 0.25;
+          }
+        });
+      }
+
+      function buildNodes() {
+        NODES.forEach((node) => {
+          const group = new THREE.Group();
+          group.position.set(...node.position);
+          group.userData.node = node;
+          group.userData.baseSizeMultiplier = getNodeSizeMultiplier(node);
+          node.group = group;
+
+          const borderMaterial = new THREE.MeshBasicMaterial({
+            color: IDLE_BORDER_COLOR,
+            transparent: true,
+            opacity: 0.62,
+            toneMapped: false,
+          });
+          const border = new THREE.Mesh(borderGeo, borderMaterial);
+          border.position.z = -0.02;
+          border.userData.group = group;
+          group.userData.borderMesh = border;
+          group.userData.borderMaterial = borderMaterial;
+          group.add(border);
+
+          const faceMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.92, toneMapped: false });
+          const face = new THREE.Mesh(frontGeo, faceMaterial);
+          face.userData.group = group;
+          group.userData.faceMesh = face;
+          group.userData.faceMaterial = faceMaterial;
+          group.add(face);
+          setNodeAspect(group, 1200, 800);
+
+          textureLoader.load(
+            node.image,
+            (texture) => {
+              texture.colorSpace = THREE.SRGBColorSpace;
+              texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 8);
+              faceMaterial.map = texture;
+              const imageWidth = texture.image?.naturalWidth || texture.image?.videoWidth || texture.image?.width || 1200;
+              const imageHeight = texture.image?.naturalHeight || texture.image?.videoHeight || texture.image?.height || 800;
+              setNodeAspect(group, imageWidth, imageHeight);
+              faceMaterial.needsUpdate = true;
+            },
+            undefined,
+            () => {
+              setNodeAspect(group, 1200, 800);
+              faceMaterial.color.set(DOMAIN_COLORS[node.domains[0]] || '#ffffff');
+              faceMaterial.opacity = 0.28;
+            }
+          );
+
+          nodeGroups.push(group);
+          nodeMap.set(node.id, group);
+          scene.add(group);
+        });
+
+        NODES.forEach((node) => {
+          node.connections.forEach((targetId) => {
+            const key = [node.id, targetId].sort().join('--');
+            if (lineSet.has(key)) return;
+            lineSet.add(key);
+            const target = nodeById.get(targetId);
+            if (!target) return;
+
+            const geometry = new THREE.BufferGeometry().setFromPoints([
+              new THREE.Vector3(...node.position),
+              new THREE.Vector3(...target.position),
+            ]);
+            const material = new THREE.LineBasicMaterial({
+              color: IDLE_LINE_COLOR,
+              transparent: true,
+              opacity: 0.25,
+              toneMapped: false,
+            });
+            const line = new THREE.Line(geometry, material);
+            line.userData.sourceId = node.id;
+            line.userData.targetId = targetId;
+            lines.push(line);
+            scene.add(line);
+          });
+        });
+      }
+
+      buildNodes();
+      applyFilters();
+
+      renderer.domElement.addEventListener('pointermove', (event) => {
+        updatePointer(event.clientX, event.clientY);
+        if (pointerState.dragging) return;
+        const deltaX = event.clientX - pointerState.x;
+        const deltaY = event.clientY - pointerState.y;
+        if (Math.hypot(deltaX, deltaY) > CLICK_DRAG_THRESHOLD) {
+          pointerState.dragging = true;
+        }
+      });
+
+      renderer.domElement.addEventListener('pointerdown', (event) => {
+        pointerState.x = event.clientX;
+        pointerState.y = event.clientY;
+        pointerState.dragging = false;
+        updatePointer(event.clientX, event.clientY);
+      });
+
+      renderer.domElement.addEventListener('pointerup', () => {
+        if (pointerState.dragging) return;
+        if (state.hoveredNode) {
+          if (!state.entered) enterAtlas();
+          selectNode(state.hoveredNode);
+          return;
+        }
+        if (state.activeNode) {
+          clearSelection();
+        }
+      });
+
+      renderer.domElement.addEventListener('pointerleave', () => {
+        pointer.x = 9999;
+        pointer.y = 9999;
+        root.classList.remove('hovering');
+      });
+
+      renderer.domElement.addEventListener('touchstart', (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        pointerState.x = touch.clientX;
+        pointerState.y = touch.clientY;
+        pointerState.dragging = false;
+        updatePointer(touch.clientX, touch.clientY);
+      }, { passive: true });
+
+      renderer.domElement.addEventListener('touchmove', (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        updatePointer(touch.clientX, touch.clientY);
+        const deltaX = touch.clientX - pointerState.x;
+        const deltaY = touch.clientY - pointerState.y;
+        if (Math.hypot(deltaX, deltaY) > CLICK_DRAG_THRESHOLD) {
+          pointerState.dragging = true;
+        }
+      }, { passive: true });
+
+      renderer.domElement.addEventListener('touchend', () => {
+        if (pointerState.dragging) return;
+        if (state.hoveredNode) {
+          if (!state.entered) enterAtlas();
+          selectNode(state.hoveredNode);
+          return;
+        }
+        if (state.activeNode) {
+          clearSelection();
+        }
+      });
+
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          clearSelection();
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        updateActiveViewOffset();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        composer.setSize(window.innerWidth, window.innerHeight);
+        bloomPass.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const t = clock.getElapsedTime();
+        raycaster.setFromCamera(pointer, camera);
+        const intersects = raycaster.intersectObjects(nodeGroups, true);
+        const nextHoveredGroup = intersects[0]?.object?.userData?.group || intersects[0]?.object?.parent || null;
+        state.hoveredNode = state.activeNode ? null : nextHoveredGroup?.userData?.node || null;
+        root.classList.toggle('hovering', Boolean(state.hoveredNode));
+
+        if (state.cameraMode === 'overview') {
+          scene.rotation.x += (0 - scene.rotation.x) * 0.08;
+          scene.rotation.y += (0 - scene.rotation.y) * 0.08;
+          controls.target.lerp(overviewTarget, 0.14);
+
+          if (!controls.enabled) {
+            camera.position.lerp(OVERVIEW_CAMERA, 0.06);
+            lookAtProxy.lerp(overviewTarget, 0.14);
+            camera.lookAt(lookAtProxy);
+            if (camera.position.distanceTo(OVERVIEW_CAMERA) < 0.08 && controls.target.distanceTo(overviewTarget) < 0.08) {
+              camera.position.copy(OVERVIEW_CAMERA);
+              controls.target.copy(overviewTarget);
+              controls.enabled = true;
+              if (!isUserOrbiting && state.entered) {
+                scheduleOverviewAutoRotate(300);
+              }
+            }
+          }
+        } else if (state.activeNode) {
+          scene.rotation.x += (0 - scene.rotation.x) * 0.08;
+          scene.rotation.y += (0 - scene.rotation.y) * 0.08;
+          const activeGroup = state.activeNode.group;
+          const activePosition = activeGroup.position;
+
+          if (state.cameraMode === 'flight') {
+            controls.enabled = false;
+            controls.autoRotate = false;
+            state.flightProgress = Math.min(state.flightProgress + 0.035, 1);
+            const easedProgress = easeInOutCubic(state.flightProgress);
+            camera.position.lerpVectors(flightFrom, flightTo, easedProgress);
+            lookAtProxy.lerpVectors(flightLookFrom, flightLookTo, easedProgress);
+            camera.lookAt(lookAtProxy);
+            if (state.flightProgress >= 1) {
+              camera.position.copy(flightTo);
+              controls.target.copy(activePosition);
+              controls.enabled = true;
+              controls.autoRotate = false;
+              state.cameraMode = 'focus';
+            }
+          } else {
+            controls.enabled = true;
+            controls.autoRotate = false;
+            controls.target.copy(activePosition);
+          }
+        }
+
+        updateActiveViewOffset();
+        stars.rotation.y = t * 0.008;
+
+        nodeGroups.forEach((group) => {
+          group.quaternion.copy(camera.quaternion);
+        });
+
+        updateColors();
+        if (controls.enabled) controls.update();
+        composer.render();
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
