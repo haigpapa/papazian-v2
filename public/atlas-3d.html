@@ -478,7 +478,7 @@
 
       <div class="island-nav-shell">
         <nav class="island-nav" aria-label="Atlas navigation">
-          <a class="nav-pill shuffle is-home" href="/">PAPAZIAN</a>
+          <a class="nav-pill shuffle is-home" href="./">PAPAZIAN</a>
           <button class="nav-pill shuffle" type="button" data-filter="sound">SOUND</button>
           <button class="nav-pill shuffle" type="button" data-filter="text">TEXT</button>
           <button class="nav-pill shuffle" type="button" data-filter="image">IMAGE</button>
@@ -529,7 +529,7 @@
       import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
       import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
       import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-      import { DOMAIN_COLORS, DOMAIN_LABELS, ENTRY_COPY, NODES } from '/data/nodes.js';
+      import { DOMAIN_COLORS, DOMAIN_LABELS, ENTRY_COPY, NODES } from './data/nodes.js';
 
       const DRAWER_Y_OFFSET = 1.2;
       const CLICK_DRAG_THRESHOLD = 8;
@@ -564,6 +564,11 @@
       const crosshair = document.getElementById('crosshair');
       const filterButtons = Array.from(document.querySelectorAll('[data-filter]'));
       const shuffleTargets = Array.from(document.querySelectorAll('.shuffle'));
+      const siteBaseUrl = new URL('./', window.location.href);
+
+      function resolveSitePath(path) {
+        return new URL(path.replace(/^\/+/, ''), siteBaseUrl).toString();
+      }
 
       document.getElementById('entry-title').textContent = ENTRY_COPY.title;
       document.getElementById('entry-body').textContent = ENTRY_COPY.body;
@@ -869,10 +874,11 @@
         drawerLink.removeAttribute('rel');
 
         if (node.actionHref) {
-          drawerLink.href = node.actionHref;
+          const external = /^[a-z][a-z\d+.-]*:\/\//i.test(node.actionHref);
+          drawerLink.href = external ? node.actionHref : resolveSitePath(node.actionHref);
           drawerLink.textContent = node.actionLabel || 'OPEN';
           drawerLink.hidden = false;
-          if (node.actionExternal || /^https?:\/\//.test(node.actionHref)) {
+          if (node.actionExternal || external) {
             drawerLink.target = '_blank';
             drawerLink.rel = 'noreferrer noopener';
           }
@@ -881,7 +887,7 @@
           drawerLink.textContent = '';
           drawerLink.hidden = true;
         } else {
-          drawerLink.href = `/projects/${node.id}`;
+          drawerLink.href = resolveSitePath(`/projects/${node.id}`);
           drawerLink.textContent = node.actionLabel || 'ENTER';
           drawerLink.hidden = false;
         }

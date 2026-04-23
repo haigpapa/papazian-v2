@@ -1,22 +1,27 @@
 import { DOMAIN_META } from '../data/siteContent';
 
+function withBasePath(path) {
+  const normalizedPath = path.replace(/^\/+/, '');
+  return `${import.meta.env.BASE_URL}${normalizedPath}`;
+}
+
 const IMAGE_MAP = {
-  derive: '/images/portfolio-derive.jpeg',
-  'space-time-tuning-machine': '/images/66a173aa-7fb2-4c00-8a74-09b2e01b9e18_1_105_c.jpeg',
-  storylines: '/images/portfolio-storylines.jpeg',
-  'mashrou-leila': '/images/mashrou_leila_baalbeck_image-1024x682.jpg',
-  '3d-beat-synth': '/images/portfolio-3dbeats.jpeg',
-  'photon-plus': '/images/portfolio-photon.jpeg',
-  'music-engines': '/images/portfolio-engine.jpeg',
-  'hah-was': '/images/portfolio-tracks.jpeg',
-  'resonance-atlas': '/images/portfolio-tracks.jpeg',
-  'sometimes-i-wake-up-elsewhere': '/images/portfolio-mobius.jpeg',
-  'mekena-nyc': '/images/img_8719.jpeg',
-  'codeverse-explorer': '/images/screenshot-2026-02-20-at-4.05.17-am.png',
-  'why-were-like-this': '/images/screenshot-2026-02-20-at-3.53.35-am.png',
-  'autopsy-beirut-phantom': '/images/screenshot-2026-02-20-at-9.18.49-pm.png',
-  'architecture-in-low-res': '/images/screenshot-2026-01-26-at-1.19.33-pm.png',
-  '1000-strings-at-rest': '/images/ibnelleil-cover.jpg',
+  derive: withBasePath('/images/portfolio-derive.jpeg'),
+  'space-time-tuning-machine': withBasePath('/images/66a173aa-7fb2-4c00-8a74-09b2e01b9e18_1_105_c.jpeg'),
+  storylines: withBasePath('/images/portfolio-storylines.jpeg'),
+  'mashrou-leila': withBasePath('/images/mashrou_leila_baalbeck_image-1024x682.jpg'),
+  '3d-beat-synth': withBasePath('/images/portfolio-3dbeats.jpeg'),
+  'photon-plus': withBasePath('/images/portfolio-photon.jpeg'),
+  'music-engines': withBasePath('/images/portfolio-engine.jpeg'),
+  'hah-was': withBasePath('/images/portfolio-tracks.jpeg'),
+  'resonance-atlas': withBasePath('/images/portfolio-tracks.jpeg'),
+  'sometimes-i-wake-up-elsewhere': withBasePath('/images/portfolio-mobius.jpeg'),
+  'mekena-nyc': withBasePath('/images/img_8719.jpeg'),
+  'codeverse-explorer': withBasePath('/images/screenshot-2026-02-20-at-4.05.17-am.png'),
+  'why-were-like-this': withBasePath('/images/screenshot-2026-02-20-at-3.53.35-am.png'),
+  'autopsy-beirut-phantom': withBasePath('/images/screenshot-2026-02-20-at-9.18.49-pm.png'),
+  'architecture-in-low-res': withBasePath('/images/screenshot-2026-01-26-at-1.19.33-pm.png'),
+  '1000-strings-at-rest': withBasePath('/images/ibnelleil-cover.jpg'),
 };
 
 export function displayProjectTitle(title) {

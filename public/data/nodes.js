@@ -1145,9 +1145,19 @@ function remapPosition(node) {
   return node.position.map(roundCoord);
 }
 
+const PUBLIC_ASSET_BASE = new URL('../', import.meta.url);
+
+function resolvePublicAsset(path) {
+  if (!path || /^[a-z][a-z\d+.-]*:/i.test(path) || path.startsWith('//')) {
+    return path;
+  }
+
+  return new URL(path.replace(/^\/+/, ''), PUBLIC_ASSET_BASE).toString();
+}
+
 export const NODES = RAW_NODES.map((node) => ({
   ...node,
   position: remapPosition(node),
   shortTitle: SHORT_TITLES[node.id] || node.title,
-  image: node.image || placeholderImage(node),
+  image: resolvePublicAsset(node.image || placeholderImage(node)),
 }));
