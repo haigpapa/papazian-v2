@@ -1,0 +1,171 @@
+[
+  {
+    "id": "tebr",
+    "current": "/images/atlas/generated/tebr-generated-v2.webp",
+    "alternates": [
+      "/images/atlas/generated/tebr-generated-v1.webp"
+    ],
+    "type": "generated",
+    "notes": "Brighter atlas-safe replacement selected over the darker v1."
+  },
+  {
+    "id": "fictive-environments",
+    "current": "/images/atlas/generated/fictive-environments-generated-v2.webp",
+    "alternates": [
+      "/images/atlas/generated/fictive-environments-generated-v1.webp"
+    ],
+    "type": "generated",
+    "notes": "Brighter studio/architecture version selected over the darker v1."
+  },
+  {
+    "id": "sometimes-i-wake-up-elsewhere",
+    "current": "/images/atlas/generated/sometimes-i-wake-up-elsewhere-generated-v2.webp",
+    "alternates": [
+      "/images/atlas/generated/sometimes-i-wake-up-elsewhere-generated-v1.webp"
+    ],
+    "type": "generated",
+    "notes": "Literary manuscript still with more visible midtones for atlas legibility."
+  },
+  {
+    "id": "localization-gap",
+    "current": "/images/atlas/generated/localization-gap-generated-v2.webp",
+    "alternates": [
+      "/images/atlas/generated/localization-gap-generated-v1.webp"
+    ],
+    "type": "generated",
+    "notes": "Brighter analytical display chosen over the darker v1."
+  },
+  {
+    "id": "mekena-nyc",
+    "current": "/images/atlas/generated/mekena-nyc-street-facade-clean-v1.webp",
+    "alternates": [
+      "/images/atlas/generated/mekena-nyc-garden-overview-enhanced-v1.webp"
+    ],
+    "type": "photo_edit",
+    "notes": "Street facade version cleaned up by removing foreground trees; aerial garden shot kept as alternate context."
+  },
+  {
+    "id": "cartography-of-absence",
+    "current": "/images/atlas/generated/cartography-of-absence-generated-v1.webp",
+    "type": "generated",
+    "notes": "Bureaucratic form with impossible handwritten answers."
+  },
+  {
+    "id": "crane-song",
+    "current": "/images/atlas/generated/crane-song-generated-v1.webp",
+    "type": "generated",
+    "notes": "Urban twilight crane image with restrained digital interference."
+  },
+  {
+    "id": "427-ai-tracks-archive",
+    "current": "/images/atlas/generated/427-ai-tracks-archive-generated-v1.webp",
+    "type": "generated",
+    "notes": "Research-interface placeholder; still worth replacing with a real archive screenshot if available."
+  },
+  {
+    "id": "meaning-stack",
+    "current": "/images/atlas/generated/meaning-stack-generated-v1.webp",
+    "type": "generated",
+    "notes": "Seven-node systems diagram placeholder."
+  },
+  {
+    "id": "systems-choreography",
+    "current": "/images/atlas/generated/systems-choreography-generated-v1.webp",
+    "type": "generated",
+    "notes": "Studio-wall systems drawing artifact."
+  },
+  {
+    "id": "the-labyrinth",
+    "current": "/images/atlas/generated/the-labyrinth-generated-v1.webp",
+    "type": "generated",
+    "notes": "Literary/manuscript image with Armenian-script atmosphere."
+  },
+  {
+    "id": "the-annex",
+    "current": "/images/atlas/generated/the-annex-generated-v1.webp",
+    "type": "generated",
+    "notes": "Austere stage-plan / spatial-script image."
+  },
+  {
+    "id": "project-zero",
+    "current": "/images/atlas/generated/project-zero-generated-v1.webp",
+    "type": "generated",
+    "notes": "Quiet civic-protocol blank-form image."
+  },
+  {
+    "id": "sophies-world",
+    "current": "/images/atlas/generated/sophies-world-generated-v1.webp",
+    "type": "generated",
+    "notes": "Early-AI film-still style image."
+  },
+  {
+    "id": "lede-nyc",
+    "current": "/images/atlas/generated/lede-nyc-generated-v1.webp",
+    "type": "generated",
+    "notes": "Strong civic-intelligence placeholder UI; still worth replacing later with a real product screenshot if available."
+  },
+  {
+    "id": "frank",
+    "current": "/images/atlas/generated/frank-generated-v1.webp",
+    "type": "generated",
+    "notes": "Bias-analysis placeholder UI with source comparison framing."
+  },
+  {
+    "id": "sunburn",
+    "current": "/images/atlas/generated/sunburn-generated-v1.webp",
+    "type": "generated",
+    "notes": "Climate sonification image combining weather contours, notation, and city context."
+  },
+  {
+    "id": "bureaucratic-surrealism",
+    "current": "/images/atlas/generated/bureaucratic-surrealism-generated-v1.webp",
+    "type": "generated",
+    "notes": "Administrative-form detail with poetic impossible answers."
+  },
+  {
+    "id": "telescode",
+    "current": "/images/atlas/generated/telescode-generated-v1.webp",
+    "type": "generated",
+    "notes": "3D codebase map placeholder with layered depth and path trace."
+  },
+  {
+    "id": "menara",
+    "current": "/images/atlas/generated/menara-generated-v2.webp",
+    "type": "generated",
+    "notes": "Dusk architectural render with patterned facade and no visible lettering."
+  },
+  {
+    "id": "plot-house",
+    "current": "/images/atlas/generated/plot-house-generated-v1.webp",
+    "type": "generated",
+    "notes": "Architectural placeholder emphasizing urban negotiation in a Beirut-like context."
+  },
+  {
+    "id": "post-apocalyptic-walking-tour",
+    "current": "/images/atlas/generated/post-apocalyptic-walking-tour-generated-v1.webp",
+    "type": "generated",
+    "notes": "AR-ruin street image; stronger as placeholder than as literal documentary replacement."
+  },
+  {
+    "id": "skyline-of-insomnia",
+    "current": "/images/atlas/generated/skyline-of-insomnia-generated-v1.webp",
+    "type": "generated",
+    "notes": "Nocturnal urban-density image with strong literary mood."
+  },
+  {
+    "id": "itp-camp-prototypes",
+    "current": "/images/atlas/generated/itp-camp-prototypes-generated-v1.webp",
+    "type": "generated",
+    "notes": "Maker-bench prototype image with good tactile detail."
+  },
+  {
+    "id": "vessel-orchestra",
+    "type": "wanted_real_photo",
+    "notes": "Still waiting for a real performance image; not generated yet to avoid faking a museum/documentary still."
+  },
+  {
+    "id": "yo-yo-ma-collaboration",
+    "type": "wanted_real_photo",
+    "notes": "Still waiting for a real Byblos performance image; not generated yet to avoid faking a historical collaboration still."
+  }
+]

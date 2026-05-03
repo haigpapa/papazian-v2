@@ -66,7 +66,7 @@ const RAW_NODES = [
       -3.8,
       -12.2
     ],
-    "image": "/images/portfolio-derive.jpeg"
+    "image": "/images/atlas/derive-memory-navigation-system.webp"
   },
   {
     "id": "space-time-tuning-machine",
@@ -100,7 +100,7 @@ const RAW_NODES = [
       11.8,
       -11.6
     ],
-    "image": "/images/66a173aa-7fb2-4c00-8a74-09b2e01b9e18_1_105_c.jpeg"
+    "image": "/images/atlas/sttm-broad-museum-installation.webp"
   },
   {
     "id": "storylines",
@@ -131,7 +131,7 @@ const RAW_NODES = [
       11.2,
       -13.6
     ],
-    "image": "/images/portfolio-storylines.jpeg"
+    "image": "/images/atlas/storylines-graph-interface.webp"
   },
   {
     "id": "mashrou-leila",
@@ -173,7 +173,7 @@ const RAW_NODES = [
       0.8,
       -8.2
     ],
-    "image": "/images/mashrou_leila_baalbeck_image-1024x682.jpg"
+    "image": "/images/atlas/mashrou-leila-baalbeck-roman-ruins.webp"
   },
   {
     "id": "mashrou-self-titled-ep",
@@ -200,7 +200,7 @@ const RAW_NODES = [
       5.4,
       -13.2
     ],
-    "image": "/images/mashrou-leila/mashrou-leila-debut.jpeg",
+    "image": "/images/atlas/mashrou-leila-self-titled-ep-cover.webp",
     "hasProjectPage": false
   },
   {
@@ -228,7 +228,7 @@ const RAW_NODES = [
       11.2,
       -14.6
     ],
-    "image": "/images/mashrou-leila/halromancyalbum.jpg",
+    "image": "/images/atlas/el-hal-romancy-album.webp",
     "hasProjectPage": false
   },
   {
@@ -256,7 +256,7 @@ const RAW_NODES = [
       10.3,
       -14.1
     ],
-    "image": "/images/mashrou-leila/raasuk.jpg",
+    "image": "/images/atlas/raasuk-album-cover.webp",
     "hasProjectPage": false
   },
   {
@@ -285,7 +285,7 @@ const RAW_NODES = [
       5.1,
       -13.8
     ],
-    "image": "/images/mashrou-leila/ibnelleil2.jpeg",
+    "image": "/images/atlas/ibn-el-leil-album-cover-full.webp",
     "hasProjectPage": false
   },
   {
@@ -314,7 +314,7 @@ const RAW_NODES = [
       -1.8,
       -14.7
     ],
-    "image": "/images/mashrou-leila/roman-video.jpg",
+    "image": "/images/atlas/roman-music-video-still.webp",
     "hasProjectPage": false,
     "actionHref": "https://www.youtube.com/playlist?list=PL0O4hK3C5ZP8PAawTLADz0eaTqD_efPgc",
     "actionLabel": "WATCH PLAYLIST",
@@ -346,7 +346,7 @@ const RAW_NODES = [
       -8.7,
       -16.9
     ],
-    "image": "/images/mashrou-leila/mashrou-baalbeck-large.jpeg",
+    "image": "/images/atlas/baalbeck-international-festival-2017.webp",
     "hasProjectPage": false
   },
   {
@@ -374,7 +374,7 @@ const RAW_NODES = [
       -10.1,
       -17.4
     ],
-    "image": "/images/mashrou-leila/rolling-stone-mashrou-leila.jpeg",
+    "image": "/images/atlas/rolling-stone-mena-cover-mashrou.webp",
     "hasProjectPage": false
   },
   {
@@ -403,7 +403,7 @@ const RAW_NODES = [
       -5.6,
       -16.4
     ],
-    "image": "/images/mashrou-leila/cost-of-being-queer-arab.webp",
+    "image": "/images/atlas/cost-of-being-queer-arab-nyt.webp",
     "hasProjectPage": false
   },
   {
@@ -430,7 +430,7 @@ const RAW_NODES = [
       1.7,
       -17
     ],
-    "image": "/images/mashrou-leila/yoyoma-mashrou.jpg",
+    "image": "/images/atlas/haoud-yo-yo-ma-byblos-performance.webp",
     "hasProjectPage": false
   },
   {
@@ -459,7 +459,7 @@ const RAW_NODES = [
       8.3,
       -16.2
     ],
-    "image": "/images/mashrou-leila/block9-roisinmurphjy.jpg",
+    "image": "/images/atlas/salam-block9-roisin-murphy.webp",
     "hasProjectPage": false
   },
   {
@@ -488,7 +488,7 @@ const RAW_NODES = [
       13.5,
       -17.1
     ],
-    "image": "/images/mashrou-leila/beirutschool.jpg",
+    "image": "/images/atlas/beyrouth-et-beyrouth-beirut-school.webp",
     "hasProjectPage": false
   },
   {
@@ -519,7 +519,7 @@ const RAW_NODES = [
       14.9,
       -15.8
     ],
-    "image": "/images/img_8719.jpeg"
+    "image": "/images/atlas/mekena-nyc-queens-exterior.webp"
   },
   {
     "id": "sometimes-i-wake-up-elsewhere",
@@ -551,7 +551,7 @@ const RAW_NODES = [
       -15.2,
       -19.2
     ],
-    "image": "/images/portfolio-mobius.jpeg"
+    "image": "/images/atlas/siwue-manuscript-fragment.webp"
   },
   {
     "id": "tebr",
@@ -616,7 +616,7 @@ const RAW_NODES = [
       3,
       -15.8
     ],
-    "image": "/images/portfolio-tracks.jpeg"
+    "image": "/images/atlas/hah-was-hallucination-detection-ui.webp"
   },
   {
     "id": "3d-beat-synth",
@@ -646,7 +646,7 @@ const RAW_NODES = [
       -10.9,
       -12.8
     ],
-    "image": "/images/portfolio-3dbeats.jpeg"
+    "image": "/images/atlas/3d-beat-synth-webgl-interface.webp"
   },
   {
     "id": "resonance-atlas",
@@ -677,7 +677,7 @@ const RAW_NODES = [
       14.7,
       -20.8
     ],
-    "image": "/images/portfolio-tracks.jpeg"
+    "image": "/images/atlas/resonance-atlas-spatial-sound-map.webp"
   },
   {
     "id": "maqamai",
@@ -737,7 +737,7 @@ const RAW_NODES = [
       9.8,
       -20.6
     ],
-    "image": "/images/screenshot-2026-02-20-at-9.18.49-pm.png"
+    "image": "/images/atlas/autopsy-beirut-phantom-spatial-media.webp"
   },
   {
     "id": "cartography-of-absence",
@@ -793,7 +793,7 @@ const RAW_NODES = [
       -19.8,
       -21.4
     ],
-    "image": "/images/screenshot-2026-02-20-at-3.53.35-am.png"
+    "image": "/images/atlas/why-were-like-this-interface.webp"
   },
   {
     "id": "photon-plus",
@@ -823,7 +823,7 @@ const RAW_NODES = [
       -7.6,
       -14.5
     ],
-    "image": "/images/portfolio-photon.jpeg"
+    "image": "/images/atlas/photon-plus-optical-sequencer.webp"
   },
   {
     "id": "codeverse-explorer",
@@ -854,7 +854,7 @@ const RAW_NODES = [
       13.1,
       -11.2
     ],
-    "image": "/images/screenshot-2026-02-20-at-4.05.17-am.png"
+    "image": "/images/atlas/codeverse-explorer-3d-codebase.webp"
   },
   {
     "id": "kardia",
@@ -918,7 +918,7 @@ const RAW_NODES = [
       -1.6,
       -23
     ],
-    "image": "/images/portfolio-engine.jpeg"
+    "image": "/images/atlas/music-engines-research-engine.webp"
   },
   {
     "id": "architecture-in-low-res",
@@ -949,7 +949,7 @@ const RAW_NODES = [
       22.6,
       -24.6
     ],
-    "image": "/images/screenshot-2026-01-26-at-1.19.33-pm.png"
+    "image": "/images/atlas/architecture-low-res-thesis-render.webp"
   },
   {
     "id": "1000-strings-at-rest",
@@ -978,7 +978,7 @@ const RAW_NODES = [
       9.3,
       -23.8
     ],
-    "image": "/images/ibnelleil-cover.jpg"
+    "image": "/images/atlas/1000-strings-at-rest-installation.webp"
   }
 ];
 
@@ -1147,6 +1147,51 @@ function remapPosition(node) {
 
 const PUBLIC_ASSET_BASE = new URL('../', import.meta.url);
 
+const IMAGE_OVERRIDES = {
+  '1000-strings-at-rest': '/images/atlas/1000-strings-at-rest-installation.webp',
+  '3d-beat-synth': '/images/atlas/3d-beat-synth-webgl-interface.webp',
+  'architecture-in-low-res': '/images/atlas/architecture-low-res-thesis-render.webp',
+  'archive-of-unwritten-songs': '/images/atlas/archive-unwritten-songs-generative.webp',
+  'aub-architecture-b-arch': '/images/atlas/aub-barch-beirut-campus.webp',
+  'auditions-for-a-battle': '/images/atlas/auditions-for-a-battle-performance-video.webp',
+  'autopsy-beirut-phantom': '/images/atlas/autopsy-beirut-phantom-spatial-media.webp',
+  'b018-nightclub': '/images/atlas/b018-nightclub-dw5-interior.webp',
+  'banksy-block-9-retreat': '/images/atlas/banksy-block9-walled-off-hotel.webp',
+  'cartography-of-absence': '/images/atlas/cartography-of-absence-bureaucratic-form.webp',
+  'codeverse-explorer': '/images/atlas/codeverse-explorer-3d-codebase.webp',
+  'colors-baby': '/images/atlas/colors-baby-ai-music-video.webp',
+  'cost-of-being-queer-and-arab': '/images/atlas/cost-of-being-queer-arab-nyt.webp',
+  'derive': '/images/atlas/derive-memory-navigation-system.webp',
+  'el-hal-romancy': '/images/atlas/el-hal-romancy-album.webp',
+  'galaxy-birds': '/images/atlas/galaxy-birds-generative-art.webp',
+  'hah-was': '/images/atlas/hah-was-hallucination-detection-ui.webp',
+  'house-ii-skin': '/images/atlas/house-ii-skin-architectural-model.webp',
+  'ibn-el-leil-album': '/images/atlas/ibn-el-leil-album-cover-full.webp',
+  'kardia': '/images/atlas/kardia-body-signal-interface.webp',
+  'maqamai': '/images/atlas/maqamai-maqam-ai-interface.webp',
+  'mashrou-leila': '/images/atlas/mashrou-leila-baalbeck-roman-ruins.webp',
+  'material-for-a-novel': '/images/atlas/material-for-a-novel-video-still.webp',
+  'mekena-nyc': '/images/atlas/mekena-nyc-queens-exterior.webp',
+  'museum-of-architecture': '/images/atlas/museum-of-architecture-aub-design.webp',
+  'new-york-voices': '/images/atlas/new-york-voices-joes-pub.webp',
+  'opera-house-design': '/images/atlas/opera-house-design-aub-project.webp',
+  'photon-plus': '/images/atlas/photon-plus-optical-sequencer.webp',
+  'post-conflict-urbanism': '/images/atlas/post-conflict-urbanism-south-lebanon.webp',
+  'raasuk-album': '/images/atlas/raasuk-album-cover.webp',
+  'resonance-atlas': '/images/atlas/resonance-atlas-spatial-sound-map.webp',
+  'rolling-stone-cover': '/images/atlas/rolling-stone-mena-cover-mashrou.webp',
+  'roman-video': '/images/atlas/roman-music-video-still.webp',
+  'sometimes-i-wake-up-elsewhere': '/images/atlas/siwue-manuscript-fragment.webp',
+  'space-time-tuning-machine': '/images/atlas/sttm-broad-museum-installation.webp',
+  'stage-architecture': '/images/atlas/stage-architecture-mashrou-tour.webp',
+  'storylines': '/images/atlas/storylines-graph-interface.webp',
+  'tebr': '/images/atlas/tebr-violin-waveform.webp',
+  'the-bartlett-m-arch': '/images/atlas/bartlett-march-london-thesis.webp',
+  'the-waiting-room': '/images/atlas/the-waiting-room-installation.webp',
+  'vessel-orchestra': '/images/atlas/vessel-orchestra-met-performance.webp',
+  'vessel-orchestra-met': '/images/atlas/vessel-orchestra-met-documentation.webp',
+};
+
 function resolvePublicAsset(path) {
   if (!path || /^[a-z][a-z\d+.-]*:/i.test(path) || path.startsWith('//')) {
     return path;
@@ -1159,5 +1204,5 @@ export const NODES = RAW_NODES.map((node) => ({
   ...node,
   position: remapPosition(node),
   shortTitle: SHORT_TITLES[node.id] || node.title,
-  image: resolvePublicAsset(node.image || placeholderImage(node)),
+  image: resolvePublicAsset(IMAGE_OVERRIDES[node.id] || node.image || placeholderImage(node)),
 }));
